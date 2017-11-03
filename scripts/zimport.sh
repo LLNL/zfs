@@ -345,7 +345,7 @@ for TAG in $SRC_TAGS; do
 		fi
 
 		git archive --format=tar --prefix=$SPL_TAG/ $SPL_TAG \
-		    -o $SRC_DIR_SPL/$SPL_TAG.tar &>/dev/nul || \
+		    -o $SRC_DIR_SPL/$SPL_TAG.tar &>/dev/null || \
 		    rm $SRC_DIR_SPL/$SPL_TAG.tar
 		if [ -s $SRC_DIR_SPL/$SPL_TAG.tar ]; then
 			tar -xf $SRC_DIR_SPL/$SPL_TAG.tar -C $SRC_DIR_SPL
@@ -381,7 +381,7 @@ for TAG in $SRC_TAGS; do
 		fi
 
 		git archive --format=tar --prefix=$ZFS_TAG/ $ZFS_TAG \
-		    -o $SRC_DIR_ZFS/$ZFS_TAG.tar &>/dev/nul || \
+		    -o $SRC_DIR_ZFS/$ZFS_TAG.tar &>/dev/null || \
 		    rm $SRC_DIR_ZFS/$ZFS_TAG.tar
 		if [ -s $SRC_DIR_ZFS/$ZFS_TAG.tar ]; then
 			tar -xf $SRC_DIR_ZFS/$ZFS_TAG.tar -C $SRC_DIR_ZFS
