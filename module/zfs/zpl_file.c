@@ -92,6 +92,22 @@ zpl_iterate(struct file *filp, struct dir_context *ctx)
 	return (error);
 }
 
+#if defined(HAVE_VFS_ITERATE) && defined(FMODE_KABI_ITERATE)
+/*
+ * RHEL 7.5 compatibility; the fops.iterate() method was added to
+ * the file_operations structure but in order to maintain KABI
+ * compatibility all callers must set FMODE_KABI_ITERATE which
+ * is checked in iterate_dir().
+ */
+static int
+zpl_dir_open(struct inode *ip, struct file *filp)
+{
+	filp->f_mode |= FMODE_KABI_ITERATE;
+
+	return (0);
+}
+#endif
+
 #if !defined(HAVE_VFS_ITERATE) && !defined(HAVE_VFS_ITERATE_SHARED)
 static int
 zpl_readdir(struct file *filp, void *dirent, filldir_t filldir)
@@ -885,6 +901,9 @@ const struct file_operations zpl_file_operations = {
 const struct file_operations zpl_dir_file_operations = {
 	.llseek		= generic_file_llseek,
 	.read		= generic_read_dir,
+#if defined(HAVE_VFS_ITERATE) && defined(FMODE_KABI_ITERATE)
+	.open		= zpl_dir_open,
+#endif
 #ifdef HAVE_VFS_ITERATE_SHARED
 	.iterate_shared	= zpl_iterate,
 #elif defined(HAVE_VFS_ITERATE)
