@@ -206,9 +206,9 @@ debug_max_blks_is_negative(char *constraint, uint64_t blkid, uint64_t nblks,
 	uint64_t orig_zs_blkid, uint64_t orig_zs_pf_blkid,
 	uint64_t orig_zs_ipf_blkid, int max_dist_blks) {
 	cmn_err(CE_WARN, "toss-4454 constraint %s: blkid %llu nblks %llu "
-	    "orig_zs_blkid %llu orig_zs_pf_blkid %llu orig_zs_ipf_blkid %llu ",
-	    blkid, nblks, orig_zs_blkid, orig_zs_pf_blkid, orig_zs_ipf_blkid,
-	    max_dist_blks);
+	    "orig_zs_blkid %llu orig_zs_pf_blkid %llu orig_zs_ipf_blkid %llu "
+	    "max_dist_blks %d", constraint, blkid, nblks, orig_zs_blkid,
+	    orig_zs_pf_blkid, orig_zs_ipf_blkid, max_dist_blks);
 	dmu_zfetch_out_of_range = 1;
 }
 
